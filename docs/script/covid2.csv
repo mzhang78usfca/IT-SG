@@ -1,0 +1,11 @@
+﻿Continent,Country,Date,Cases per Million,Deaths per Million,People Vaccined per Hundred,People Fully Vaccined per Hundred
+Asia,Australia,2022/9/1,365.43,1.452,85.67,83.14
+Asia,Malaysia,2022/9/1,69.42,0.265,82.79,81.03
+Asia,Singapore,2022/9/1,362.603,0.177,91.51,90.75
+Asia,Japan,2022/9/1,1208.826,2.445,84.02,82.87
+Europe,Poland,2022/9/1,83.774,0.652,57.13,56.57
+Europe,Italy,2022/9/1,347.203,1.152,86.11,81.24
+Europe,France,2022/9/1,274.962,0.605,80.46,78.23
+Europe,Denmark,2022/9/1,134.642,1.87,81.72,81.12
+North America,United States,2022/9/1,386.104,2.013,79.36,67.71
+North America,Canada,2022/9/1,244.966,3.953,85.95,82.04
