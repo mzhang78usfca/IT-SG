@@ -2,7 +2,7 @@ function e1() {
     //Apply margin to svg
 //Studied from Bhumika Srinivas' Starbucks Website example.
     const margin = {l: 120, r:300, t:80, b:80}
-    const overall_width = 500
+    const overall_width = 460
     const overall_height = 500
     const svg_name = "#e1"
     let outerSvg = d3.select(svg_name)

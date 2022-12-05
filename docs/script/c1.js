@@ -2,7 +2,7 @@ function c1() {
     //Apply margin to svg
 //Studied from Bhumika Srinivas' Starbucks Website example.
     const margin = {l: 120, r:120, t:80, b:80}
-    const overall_width = 700
+    const overall_width = 640
     const overall_height = 500
     const numberFormat = ".4s"
     const numberFormatFunc = d3.format(numberFormat)
@@ -42,7 +42,7 @@ function c1() {
         ];
         let colorScale = d3.scaleOrdinal().domain(keys).range(colors);
 
-        let scaleX = d3.scaleBand().range([0, width]).padding(0.5);
+        let scaleX = d3.scaleBand().range([0, width]).padding(0.25);
         let scaleY = d3.scaleLinear().range([0, height]);
         let realScaleY = d3.scaleLinear().range([height, 0]);
         let axisX = d3.axisBottom(scaleX);
@@ -131,44 +131,10 @@ function c1() {
                 .attr("class", "bar")
                 .attr("x", function(d) {return scaleX(d['Year'])})
                 .attr("y", function(d) {
-                    let v = parseInt(d[keys[0]]) + parseInt(d[keys[1]]);
-                    return height - scaleY(v)
-                })
-                .attr("width", scaleX.bandwidth())
-                .attr("height", function(d) {
-                    let v = parseInt(d[keys[0]]) + parseInt(d[keys[1]]);
-                    return scaleY(v);
-                })
-                .attr('fill', function() {
-                    //calculate color using sequential hue in d3
-                    return colorScale(colorScale(keys[1]));
-                })
-                .attr("stroke", "black");
-            bars1.append("text")
-                .attr("class", "bar-label")
-                .attr("x", function(d) {return scaleX(d['Year']) + scaleX.bandwidth() / 2})
-                .attr("y", function(d) {
-                    let v = parseInt(d[keys[0]]) + parseInt(d[keys[1]]);
-                    return height - scaleY(v) + 15
-                })
-                .attr('text-anchor', 'middle')
-                .style("font-size", "12px")
-                .text(function(d) {
-                    let num = d[keys[1]];
-                    return numberFormatFunc(num)
-                })
-
-            let bars2 = graph.selectAll("rect2")
-                .data(data)
-                .enter();
-            bars2.append("rect")
-                .attr("class", "bar")
-                .attr("x", function(d) {return scaleX(d['Year'])})
-                .attr("y", function(d) {
                     let v = parseInt(d[keys[0]]);
                     return height - scaleY(v)
                 })
-                .attr("width", scaleX.bandwidth())
+                .attr("width", scaleX.bandwidth() / 2)
                 .attr("height", function(d) {
                     let v = parseInt(d[keys[0]]);
                     return scaleY(v);
@@ -178,17 +144,51 @@ function c1() {
                     return colorScale(colorScale(keys[0]));
                 })
                 .attr("stroke", "black");
-            bars2.append("text")
+            bars1.append("text")
                 .attr("class", "bar-label")
-                .attr("x", function(d) {return scaleX(d['Year']) + scaleX.bandwidth() / 2})
+                .attr("x", function(d) {return scaleX(d['Year']) + scaleX.bandwidth() / 4})
                 .attr("y", function(d) {
                     let v = parseInt(d[keys[0]]);
-                    return height - scaleY(v) + 15
+                    return height - scaleY(v) - 15
                 })
                 .attr('text-anchor', 'middle')
                 .style("font-size", "12px")
                 .text(function(d) {
                     let num = d[keys[0]];
+                    return numberFormatFunc(num)
+                })
+
+            let bars2 = graph.selectAll("rect2")
+                .data(data)
+                .enter();
+            bars2.append("rect")
+                .attr("class", "bar")
+                .attr("x", function(d) {return scaleX(d['Year']) + scaleX.bandwidth() / 2})
+                .attr("y", function(d) {
+                    let v = parseInt(d[keys[1]]);
+                    return height - scaleY(v)
+                })
+                .attr("width", scaleX.bandwidth() / 2)
+                .attr("height", function(d) {
+                    let v = parseInt(d[keys[1]]);
+                    return scaleY(v);
+                })
+                .attr('fill', function() {
+                    //calculate color using sequential hue in d3
+                    return colorScale(colorScale(keys[1]));
+                })
+                .attr("stroke", "black");
+            bars2.append("text")
+                .attr("class", "bar-label")
+                .attr("x", function(d) {return scaleX(d['Year']) + scaleX.bandwidth() / 4 * 3})
+                .attr("y", function(d) {
+                    let v = parseInt(d[keys[1]]);
+                    return height - scaleY(v) - 15
+                })
+                .attr('text-anchor', 'middle')
+                .style("font-size", "12px")
+                .text(function(d) {
+                    let num = d[keys[1]];
                     return numberFormatFunc(num);
                 })
 
