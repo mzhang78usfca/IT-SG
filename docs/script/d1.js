@@ -1,7 +1,7 @@
 function d1() {
     //Apply margin to svg
 //Studied from Bhumika Srinivas' Starbucks Website example.
-    const margin = {l: 80, r:50, t:80, b:30}
+    const margin = {l: 120, r:100, t:150, b:80}
     const overall_width = 800
     const overall_height = 500
     const svg_name = "#d1"
@@ -38,7 +38,7 @@ function d1() {
         //studied from: https://github.com/markumreed/data_science_for_everyone/blob/main/d3_project/bar_chart_csv/example.js
         const width = overall_width;
         const height = overall_height;
-        const legendLocation = [width - 200, 230];
+        const legendLocation = [width/2-100, -80];
 
         //Scale building/mapping and axis drawing studied from: https://github.com/markumreed/data_science_for_everyone/blob/main/d3_project/bar_chart_csv/example.js
         let scaleX = d3.scaleTime().range([0, width]);
@@ -78,39 +78,44 @@ function d1() {
 
             //color
             let legend = d3.legendColor()
+                .orient("horizontal")
                 .shape("path", d3.symbol().type(d3.symbolsStroke).size(150))
-                .shapePadding(10)
+                .shapePadding(200)
                 .scale(scaleColor)
 
 
             //title
             graph.append("text")
                 .attr("x", width / 2)
-                .attr("y", -10)
+                .attr("y", -110)
                 .attr('text-anchor', 'middle')
                 .attr('stroke', 'black')
                 .attr('font-weight', 600)
                 .text("Singapore GDP and IT revenue changes during COVID pandemic");
             graph.append("g")
                 .attr("transform", `translate(0,${height})`)
+                .attr('class', 'axis')
                 .call(axisX)
                 .attr('stroke', 'black')
                 .append("text")
                 .attr("x", width/2)
-                .attr("y", 40)
-                .attr('stroke', 'black')
+                .attr("y", 60)
+                .attr('stroke', 'none')
+                .attr('fill', 'black')
                 .attr('text-anchor', 'middle')
                 .text("Time");
             graph.append("g")
                 .attr("transform", `translate(${scaleX(minX)},0)`)
+                .attr('class', 'axis')
                 .call(axisY)
                 .attr('stroke', 'black')
                 .append("text")
                 .attr("transform", "rotate(-90)")
-                .attr("y", -50-scaleX(minX))
+                .attr("y", -70-scaleX(minX))
                 .attr("x", -height/2)
                 .attr('text-anchor', 'middle')
-                .attr('stroke', 'black')
+                .attr('stroke', 'none')
+                .attr('fill', 'black')
                 .text('Income / $ Billion');
 
             //legend

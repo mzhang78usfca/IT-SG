@@ -1,7 +1,7 @@
 function a1(){
     //Apply margin to svg
 //Studied from Bhumika Srinivas' Starbucks Website example.
-    const margin = {l: 80, r:50, t:30, b:30}
+    const margin = {l: 80, r:50, t:30, b:50}
     const overall_width = 800
     const overall_height = 500
     const svg_name = "#a1"
@@ -30,7 +30,7 @@ function a1(){
         const legendLocation = [width - 130, 50];
 
         //Config
-        const url = "covid1.csv"
+        const url = "covid1.1.csv"
         const timeFormat = d3.utcFormat("%Y/%m/%d")
 
         //Const start-end date
@@ -39,7 +39,7 @@ function a1(){
         const dataKeyWord = "avg_death_per_mili";
 
         //const country/region info
-        const names = ["Australia", "Europe", "Singapore", "United States"];
+        const names = ["Australia", "Italy", "Singapore", "United States"];
         const colors = [
             "rgb(0,132,61)",
             "rgb(255,204,0)",
@@ -112,29 +112,30 @@ function a1(){
                 .attr("x", width / 2)
                 .attr("y", 10)
                 .attr('text-anchor', 'middle')
-                .attr('stroke', 'black')
                 .attr('font-weight', 600)
                 .text("Confirmed Covid-19 Death cases (7-days rolling average) in different countries");
             graph.append("g")
                 .attr("transform", `translate(0,${height})`)
+                .attr('class', 'axis')
                 .call(axisX)
-                .attr('stroke', 'black')
                 .append("text")
                 .attr("x", width/2)
                 .attr("y", 40)
-                .attr('stroke', 'black')
+                .attr('stroke', 'none')
+                .attr('fill', 'black')
                 .attr('text-anchor', 'middle')
                 .text("Time");
             graph.append("g")
                 .attr("transform", `translate(${scaleX(minX)},0)`)
+                .attr('class', 'axis')
                 .call(axisY)
-                .attr('stroke', 'black')
                 .append("text")
                 .attr("transform", "rotate(-90)")
                 .attr("y", -50-scaleX(minX))
                 .attr("x", -height/2)
                 .attr('text-anchor', 'middle')
-                .attr('stroke', 'black')
+                .attr('stroke', 'none')
+                .attr('fill', 'black')
                 .text('Death cases per million population');
 
             //legend

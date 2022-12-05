@@ -1,8 +1,8 @@
 function e1() {
     //Apply margin to svg
 //Studied from Bhumika Srinivas' Starbucks Website example.
-    const margin = {l: 80, r:100, t:80, b:30}
-    const overall_width = 750
+    const margin = {l: 120, r:300, t:80, b:80}
+    const overall_width = 500
     const overall_height = 500
     const svg_name = "#e1"
     let outerSvg = d3.select(svg_name)
@@ -30,7 +30,7 @@ function e1() {
         //studied from: https://github.com/markumreed/data_science_for_everyone/blob/main/d3_project/bar_chart_csv/example.js
         const width = overall_width;
         const height = overall_height;
-        const legendLoc = [width - 130, -50];
+        const legendLoc = [width+60, 150];
 
 
 
@@ -75,12 +75,13 @@ function e1() {
                 .labelOffset(20)
                 .orient('vertical')
                 .cellFilter(function(d){ return d.label !== '0.0'})
-                .title("Company Size / Employee");
+                .title("Company Size / Employee")
+                .titleWidth(200);
 
             let lg = svg.append('g')
+                .attr("class", "bubbleLegend")
                 .attr("transform", `translate(${legendLoc[0]},${legendLoc[1]})`)
-                .call(legend)
-                .attr("fill", "darkgreen");
+                .call(legend);
 
 
 
@@ -98,25 +99,26 @@ function e1() {
 
             graph.append("g")
                 .attr("transform", `translate(0,${height})`)
+                .attr('class', 'axis')
                 .call(axisX)
-                .attr('stroke', 'black')
                 .append("text")
                 .attr("x", width/2)
-                .attr("y", 40)
-                .attr('stroke', 'black')
+                .attr("y", 60)
+                .attr('stroke', 'none')
+                .attr('fill', 'black')
                 .attr('text-anchor', 'middle')
                 .text("Time");
 
             graph.append("g")
-                .attr("transform", `translate(${scaleX(minX)},0)`)
+                .attr('class', 'axis')
                 .call(axisY)
-                .attr('stroke', 'black')
                 .append("text")
                 .attr("transform", "rotate(-90)")
-                .attr("y", -50-scaleX(minX))
+                .attr("y", -25-scaleX(minX))
                 .attr("x", -height/2)
                 .attr('text-anchor', 'middle')
-                .attr('stroke', 'black')
+                .attr('stroke', 'none')
+                .attr('fill', 'black')
                 .text('Company Revenue in 2020');
 
 
@@ -129,6 +131,7 @@ function e1() {
                 .attr("cx", function(d) {return scaleX(d['Date'])})
                 .attr("cy", function(d) {return scaleY(d['Revenue'])})
                 .attr("r", function(d) {return scaleV(parseFloat(d['Size']))})
+                .attr("opacity", "0.5")
                 .attr('stroke', 'black')
                 .attr("fill", "steelblue");
 

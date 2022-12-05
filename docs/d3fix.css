@@ -1,0 +1,8 @@
+.axis { font: 20px sans-serif; }
+path.domain {stroke: black}
+svg .tick > line {stroke: black}
+svg .tick > text {font: 16px sans-serif; stroke:none; color: black}
+.legendTitle {font: 20px sans-serif; font-weight: bold}
+.legendCells {font-weight: bold}
+.bar-label {font: 20px sans-serif; font-weight: bold}
+.bubbleLegend .swatch {fill: lightgreen; stroke: black; fill-opacity: 0.5}

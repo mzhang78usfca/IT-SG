@@ -1,7 +1,7 @@
 function b1() {
     //Apply margin to svg
 //Studied from Bhumika Srinivas' Starbucks Website example.
-    const margin = {l: 80, r:50, t:80, b:50}
+    const margin = {l: 80, r:50, t:80, b:65}
     const overall_width = 800
     const overall_height = 500
     const svg_name = "#b1"
@@ -26,7 +26,7 @@ function b1() {
         const width = overall_width;
         const height = overall_height;
         const legendLocation = [width - 130, 0];
-        const legend2Location = [width - 130, 100];
+        const legend2Location = [width - 130, 160];
 
         //Config
         const url = "covid2.csv"
@@ -85,23 +85,33 @@ function b1() {
                 .attr("x", width / 2)
                 .attr("y", -40)
                 .attr('text-anchor', 'middle')
-                .attr('stroke', 'black')
+                .attr('stroke', 'none')
+                .attr('fill', 'black')
                 .attr('font-weight', 600)
                 .text("Covid Data in Different Countries @ 09-01-2022");
 
             let yAxis = graph.append("g")
-                .attr('class', 'yAxis')
 
             for(let i = 0; i < keys.length; i++){
                 yAxis.append("g")
                     .attr("transform", `translate(${scaleX(keys[i])},0)`)
+                    .attr('class', 'axis')
                     .call(axisYs[i])
                     .attr('stroke', 'black')
                     .append("text")
-                    .attr("y", height+20)
+                    .attr("y", height+25)
                     .attr("x", 0)
+                    .attr("dy", () => {
+                        if(i%2===0){
+                            return "0em"
+                        }
+                        else{
+                            return "1.5em"
+                        }
+                    })
                     .attr('text-anchor', 'middle')
-                    .attr('stroke', 'black')
+                    .attr('stroke', 'none')
+                    .attr('fill', 'black')
                     .text(keys[i]);
             }
 
@@ -156,6 +166,7 @@ function b1() {
             let scaleCountryColor = d3.scaleOrdinal().domain(countries).range(countryColors);
             //color
             let legend1 = d3.legendColor()
+                .title("Continent")
                 .shape("path", d3.symbol().type(d3.symbolsStroke).size(150))
                 .shapePadding(10)
                 .scale(scaleContinentColor)
@@ -164,6 +175,7 @@ function b1() {
                 });
 
             let legend2 = d3.legendColor()
+                .title("Country")
                 .shape("path", d3.symbol().type(d3.symbolsStroke).size(150))
                 .shapePadding(10)
                 .scale(scaleCountryColor)
