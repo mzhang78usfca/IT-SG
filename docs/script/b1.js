@@ -251,15 +251,15 @@ function b1() {
         let hidden;
 
 
-        if(cell.attr("clicked") === "false"){
-            cell.attr("clicked", "true")
-            cell.attr("text-decoration", "line-through");
-            hidden = true;
-        }
-        else{
+        if(cell.attr("clicked") === "true"){
             cell.attr("clicked", "false")
             cell.attr("text-decoration", "");
             hidden = false;
+        }
+        else{
+            cell.attr("clicked", "true")
+            cell.attr("text-decoration", "line-through");
+            hidden = true;
         }
 
         graph.selectAll(`.${className}`)
