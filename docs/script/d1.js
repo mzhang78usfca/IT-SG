@@ -1,8 +1,8 @@
 function d1() {
     //Apply margin to svg
 //Studied from Bhumika Srinivas' Starbucks Website example.
-    const margin = {l: 120, r:100, t:150, b:80}
-    const overall_width = 660
+    const margin = {l: 120, r:160, t:150, b:80}
+    const overall_width = 600
     const overall_height = 500
     const svg_name = "#d1"
     let outerSvg = d3.select(svg_name)
@@ -193,8 +193,7 @@ function d1() {
                 .attr("class", "tooltip")
                 .attr("stroke", "black")
                 .attr("fill", "white")
-
-                .attr("width", tooltipConfig.width)
+                .attr("width", tooltipConfig.width + 30)
                 .attr("height", tooltipConfig.height)
                 .attr("x", tooltipConfig.x)
                 .attr("y", tooltipConfig.y)
@@ -207,10 +206,10 @@ function d1() {
             focus2.append("text")
                 .attr("x", 18)
                 .attr("y", 18)
-                .text(names[1]+":");
+                .text("IT Revenue"+":");
             focus2.append("text")
                 .attr("class", "tooltip-y")
-                .attr("x", 60)
+                .attr("x", 100)
                 .attr("y", 18)
 
             graph.append("rect")
