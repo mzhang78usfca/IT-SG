@@ -6,3 +6,7 @@ svg .tick > text {font: 16px sans-serif; stroke:none; color: black}
 .legendCells {font-weight: bold}
 .bar-label {font: 20px sans-serif; font-weight: bold}
 .bubbleLegend .swatch {fill: lightgreen; stroke: black; fill-opacity: 0.5}
+.overlay {
+    fill: none;
+    pointer-events: all;
+}

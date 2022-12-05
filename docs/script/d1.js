@@ -137,6 +137,114 @@ function d1() {
                         .y(function(d) {return scaleY(parseFloat(d[key]))}));
             }
 
+            const tooltipConfig = {
+                width: 120,
+                height: 50,
+                x: 10,
+                y: -22
+            }
+            const formatX = d3.timeFormat("%Y")
+            const formatY = d3.format("s")
+            //Build tooltip
+            //v3: https://bl.ocks.org/Qizly/8f6ba236b79d9bb03a80
+            //v7: https://bl.ocks.org/d3noob/755172c605313b94e5c72bc66066a87e
+            let focus = graph.append("g")
+                .attr("class", "focus")
+                .style("display", "none");
+
+            focus.append("circle")
+                .attr("r", 5)
+                .attr("stroke", "black")
+                .attr("fill", scaleColor(names[0]));
+
+            focus.append("rect")
+                .attr("class", "tooltip")
+                .attr("stroke", "black")
+                .attr("fill", "white")
+
+                .attr("width", tooltipConfig.width)
+                .attr("height", tooltipConfig.height)
+                .attr("x", tooltipConfig.x)
+                .attr("y", tooltipConfig.y)
+                .attr("rx", 4)
+                .attr("ry", 4);
+            focus.append("text")
+                .attr("class", "tooltip-x")
+                .attr("x", 18)
+                .attr("y", -2);
+            focus.append("text")
+                .attr("x", 18)
+                .attr("y", 18)
+                .text(names[0]+":");
+            focus.append("text")
+                .attr("class", "tooltip-y")
+                .attr("x", 60)
+                .attr("y", 18)
+
+            let focus2 = graph.append("g")
+                .attr("class", "focus2")
+                .style("display", "none");
+
+            focus2.append("circle")
+                .attr("r", 5)
+                .attr("stroke", "black")
+                .attr("fill", scaleColor(names[1]));
+            focus2.append("rect")
+                .attr("class", "tooltip")
+                .attr("stroke", "black")
+                .attr("fill", "white")
+
+                .attr("width", tooltipConfig.width)
+                .attr("height", tooltipConfig.height)
+                .attr("x", tooltipConfig.x)
+                .attr("y", tooltipConfig.y)
+                .attr("rx", 4)
+                .attr("ry", 4);
+            focus2.append("text")
+                .attr("class", "tooltip-x")
+                .attr("x", 18)
+                .attr("y", -2);
+            focus2.append("text")
+                .attr("x", 18)
+                .attr("y", 18)
+                .text(names[1]+":");
+            focus2.append("text")
+                .attr("class", "tooltip-y")
+                .attr("x", 60)
+                .attr("y", 18)
+
+            graph.append("rect")
+                .attr("class", "overlay")
+                .attr("width", width)
+                .attr("height", height)
+                .on("mouseover", function() {
+                    focus.style("display", null);
+                    focus2.style("display", null);
+                })
+                .on("mouseout", function() {
+                    focus.style("display", "none");
+                    focus2.style("display", "none");
+                })
+                .on("mousemove", mousemove);
+
+            let bisectDate = d3.bisector(function(d) {return d['date']}).left;
+
+            function mousemove() {
+                console.log(d3.pointer(event, this)[0])
+                let x0 = scaleX.invert(d3.pointer(event, this)[0]),
+                    i = bisectDate(data, x0, 1),
+                    d0 = data[i - 1],
+                    d1 = data[i],
+                    d = x0 - d0['date']> d1['date'] - x0 ? d1 : d0;
+                focus.attr("transform", "translate(" + scaleX(d['date']) + "," + scaleY(d[keys[0]]) + ")");
+                focus.select(".tooltip-x").text(formatX(d['date']));
+                focus.select(".tooltip-y").text(formatY(d[keys[0]]));
+
+                focus2.attr("transform", "translate(" + scaleX(d['date']) + "," + scaleY(d[keys[1]]) + ")");
+                focus2.select(".tooltip-x").text(formatX(d['date']));
+                focus2.select(".tooltip-y").text(formatY(d[keys[1]]));
+            }
+
 
 
         })
