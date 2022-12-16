@@ -1,32 +1,49 @@
-function a2() {
+function a2(){
+
     //Apply margin to svg
-//Studied from Bhumika Srinivas' Starbucks Website example.
-    const margin = {l: 90, r:50, t:30, b:50}
-    const overall_width = 740
-    const overall_height = 500
+    //Studied from Bhumika Srinivas' Starbucks Website example.
     const svg_name = "#a2"
-    let outerSvg = d3.select(svg_name)
+    const outerHeight = 600;
+    let svg = d3.select(svg_name)
         .append("svg")
-        .attr("width", overall_width + margin.l + margin.r)
-        .attr("height", overall_height + margin.t + margin.b);
-//Background
-    outerSvg.append("rect")
+        .attr("width", "100%")
+        .attr("height", outerHeight);
+    let outerWidth = parseInt(svg.style("width"), 10);
+    const margin = {l: 100, r:80, t:100, b:80}
+    const innerWidth = outerWidth - margin.l - margin.r;
+    const innerHeight = outerHeight - margin.t - margin.b;
+    //Background
+    svg.append("rect")
         .attr("width", "100%")
         .attr("height", "100%")
         .attr("fill", "#E6E6FA");
-    let svg = outerSvg.append("g")
-        .attr("transform", `translate(${margin.l}, ${margin.t})`);
+    //title
+    svg.append("text")
+        .attr("x", outerWidth / 2)
+        .attr("y", 50)
+        .attr('text-anchor', 'middle')
+        .attr('font-size', "25px")
+        .attr('font-weight', 600)
+        .text("Confirmed Covid-19 Confirmed cases ");
+    svg.append("text")
+        .attr("x", outerWidth / 2)
+        .attr("y", 50)
+        .attr("dy", "1em")
+        .attr('text-anchor', 'middle')
+        .attr('font-size', "25px")
+        .attr('font-weight', 600)
+        .text("(7-days rolling average) in different countries");
 
     function main(svg) {
 
-        //background
-        let graph = svg.append("g").attr('class', 'graph');
-
+        let graph = svg.append("g")
+            .attr('class', 'graph')
+            .attr("transform", `translate(${margin.l}, ${margin.t})`);
 
         //Variables, minus margin to prevent out of bound bars
         //studied from: https://github.com/markumreed/data_science_for_everyone/blob/main/d3_project/bar_chart_csv/example.js
-        const width = overall_width;
-        const height = overall_height;
+        const width = innerWidth;
+        const height = innerHeight;
         const legendLocation = [width - 130, 50];
 
         //Config
@@ -100,6 +117,8 @@ function a2() {
             //color
             let legend = d3.legendColor()
                 .shape("path", d3.symbol().type(d3.symbolsStroke).size(150))
+                .title("Country (Click to filter)")
+                .titleWidth(150)
                 .shapePadding(10)
                 .scale(scaleColor)
                 .on('cellclick', function (d){
@@ -107,13 +126,7 @@ function a2() {
                 });
 
 
-//title
-            graph.append("text")
-                .attr("x", width / 2)
-                .attr("y", 10)
-                .attr('text-anchor', 'middle')
-                .attr('font-weight', 600)
-                .text("Confirmed Covid-19 Confirmed cases (7-days rolling average) in different countries");
+
             graph.append("g")
                 .attr("transform", `translate(0,${height})`)
                 .attr('class', 'axis')

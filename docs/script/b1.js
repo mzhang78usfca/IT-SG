@@ -1,32 +1,47 @@
-function b1() {
+function b1(){
+
     //Apply margin to svg
-//Studied from Bhumika Srinivas' Starbucks Website example.
-    const margin = {l: 80, r:50, t:80, b:65}
-    const overall_width = 750
-    const overall_height = 500
+    //Studied from Bhumika Srinivas' Starbucks Website example.
     const svg_name = "#b1"
-    let outerSvg = d3.select(svg_name)
+    const outerHeight = 800;
+    let svg = d3.select(svg_name)
         .append("svg")
-        .attr("width", overall_width + margin.l + margin.r)
-        .attr("height", overall_height + margin.t + margin.b);
-//Background
-    outerSvg.append("rect")
+        .attr("width", "100%")
+        .attr("height", outerHeight);
+    let outerWidth = parseInt(svg.style("width"), 10);
+    const margin = {l: 80, r:80, t:110, b:65}
+    const innerWidth = outerWidth - margin.l - margin.r;
+    const innerHeight = outerHeight - margin.t - margin.b;
+    //Background
+    svg.append("rect")
         .attr("width", "100%")
         .attr("height", "100%")
         .attr("fill", "#E6E6FA");
-    let svg = outerSvg.append("g")
-        .attr("transform", `translate(${margin.l}, ${margin.t})`);
+    //title
+    svg.append("text")
+        .attr("x", outerWidth / 2)
+        .attr("y", 50)
+        .attr('text-anchor', 'middle')
+        .attr('font-size', "25px")
+        .attr('font-weight', 600)
+        .text("Covid Data in Different Countries @ 09-01-2022");
 
 
     function main(svg) {
 
-        let graph = svg.append("g").attr('class', 'graph');
+        let graph = svg.append("g")
+            .attr('class', 'graph')
+            .attr("transform", `translate(${margin.l}, ${margin.t})`);
+
         //Variables, minus margin to prevent out of bound bars
         //studied from: https://github.com/markumreed/data_science_for_everyone/blob/main/d3_project/bar_chart_csv/example.js
-        const width = overall_width;
-        const height = overall_height;
+        const width = innerWidth;
+        const height = innerHeight;
+
+
+        //const margin = {l: 80, r:50, t:80, b:65}
         const legendLocation = [width - 130, 0];
-        const legend2Location = [width - 130, 160];
+        const legend2Location = [width - 130, 220];
 
         //Config
         const url = "covid2.csv"
@@ -80,15 +95,6 @@ function b1() {
 
 
 
-            //title
-            graph.append("text")
-                .attr("x", width / 2)
-                .attr("y", -40)
-                .attr('text-anchor', 'middle')
-                .attr('stroke', 'none')
-                .attr('fill', 'black')
-                .attr('font-weight', 600)
-                .text("Covid Data in Different Countries @ 09-01-2022");
 
             let yAxis = graph.append("g")
 
@@ -166,7 +172,8 @@ function b1() {
             let scaleCountryColor = d3.scaleOrdinal().domain(countries).range(countryColors);
             //color
             let legend1 = d3.legendColor()
-                .title("Continent")
+                .title("Continent (Click to Filter)")
+                .titleWidth(150)
                 .shape("path", d3.symbol().type(d3.symbolsStroke).size(150))
                 .shapePadding(10)
                 .scale(scaleContinentColor)
@@ -175,7 +182,8 @@ function b1() {
                 });
 
             let legend2 = d3.legendColor()
-                .title("Country")
+                .title("Country (Click to Filter)")
+                .titleWidth(150)
                 .shape("path", d3.symbol().type(d3.symbolsStroke).size(150))
                 .shapePadding(10)
                 .scale(scaleCountryColor)
