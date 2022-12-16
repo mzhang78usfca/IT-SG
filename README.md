@@ -45,3 +45,6 @@ and bib file to compile the report.
 Specific required packages when compiling are written in [/report/itsg.tex](./report/itsg.tex).
 
 The LaTeX file was built using [IEEE conferences template](https://www.overleaf.com/latex/templates/ieee-bare-demo-template-for-conferences/ypypvwjmvtdf).
+
+## Slide and Recording
+You can find slide at [/slides](./slides) folder and recording at [/recording](./recording) folder.
