@@ -1,35 +1,51 @@
-function e1() {
+function e1(){
+
     //Apply margin to svg
-//Studied from Bhumika Srinivas' Starbucks Website example.
-    const margin = {l: 120, r:300, t:80, b:80}
-    const overall_width = 460
-    const overall_height = 500
+    //Studied from Bhumika Srinivas' Starbucks Website example.
     const svg_name = "#e1"
-    let outerSvg = d3.select(svg_name)
+    const outerHeight = 700;
+    let svg = d3.select(svg_name)
         .append("svg")
-        .attr("width", overall_width + margin.l + margin.r)
-        .attr("height", overall_height + margin.t + margin.b);
-//Background
-    outerSvg.append("rect")
+        .attr("width", "100%")
+        .attr("height", outerHeight);
+    let outerWidth = parseInt(svg.style("width"), 10);
+    const margin = {l: 150, r:150, t:120, b:80}
+    const innerWidth = outerWidth - margin.l - margin.r;
+    const innerHeight = outerHeight - margin.t - margin.b;
+    //Background
+    svg.append("rect")
         .attr("width", "100%")
         .attr("height", "100%")
         .attr("fill", "#E6E6FA");
-    let svg = outerSvg.append("g")
-        .attr("transform", `translate(${margin.l}, ${margin.t})`);
+    //title
+    svg.append("text")
+        .attr("x", outerWidth / 2)
+        .attr("y", 50)
+        .attr('text-anchor', 'middle')
+        .attr('font-size', "25px")
+        .attr('font-weight', 600)
+        .text("IT Companies Moved to Singapore");
+
+
+
 
     function main(svg) {
 
-        let graph = svg.append("g").attr('class', 'graph');
-
-        //Config
-        const url = "company.csv"
-        const timeFormat = d3.utcFormat("%Y/%m/%d")
-        const bubbleMax = 40;
+        let graph = svg.append("g")
+            .attr('class', 'graph')
+            .attr("transform", `translate(${margin.l}, ${margin.t})`);
 
         //Variables, minus margin to prevent out of bound bars
         //studied from: https://github.com/markumreed/data_science_for_everyone/blob/main/d3_project/bar_chart_csv/example.js
-        const width = overall_width;
-        const height = overall_height;
+        const width = innerWidth;
+        const height = innerHeight;
+
+
+        //Config
+        //const margin = {l: 120, r:300, t:80, b:80}
+        const url = "company.csv"
+        const timeFormat = d3.utcFormat("%Y/%m/%d")
+        const bubbleMax = 40;
         const legendLoc = [width+60, 150];
 
 
@@ -85,16 +101,6 @@ function e1() {
 
 
 
-
-
-            //paint title
-            graph.append("text")
-                .attr("x", width / 2)
-                .attr("y", -50)
-                .attr('text-anchor', 'middle')
-                .attr('stroke', 'black')
-                .attr('font-weight', 600)
-                .text("IT Companies Moved to Singapore");
 
 
             graph.append("g")
