@@ -51,7 +51,7 @@ function c1(){
         const url = "file/labor.csv";
         const numberFormat = ".4~s"
         const numberFormatFunc = d3.format(numberFormat)
-        const legendLocation = [outerWidth - 150, 100];
+        const legendLocation = [outerWidth - 180, 100];
         const keys = ["S Pass","Work Permit"];
         const colors = [
             "rgb(210,183,52)",

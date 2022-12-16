@@ -99,7 +99,7 @@ function a2(){
             let minX = parse(startDate);
             let maxX = parse(endDate);
             scaleX.domain([minX, maxX]).nice();
-            axisX.ticks(d3.timeMonth.every(1));
+            axisX.ticks(d3.timeMonth.every(2));
 
             //Y
             let minY = d3.min(

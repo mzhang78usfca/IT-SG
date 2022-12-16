@@ -190,10 +190,12 @@ function d1(){
                 .attr("ry", 4);
             focus.append("text")
                 .attr("class", "tooltip-x")
+                .attr("font-size", "20px")
                 .attr("x", tooltipConfig.x + tooltipLabelConfig.x)
                 .attr("y", tooltipConfig.y + tooltipLabelConfig.y1);
             focus.append("text")
                 .attr("class", "tooltip-y")
+                .attr("font-size", "20px")
                 .attr("x", tooltipConfig.x + tooltipLabelConfig.x)
                 .attr("y", tooltipConfig.y + tooltipLabelConfig.y2);
 
@@ -208,7 +210,7 @@ function d1(){
                 .attr("class", "tooltip")
                 .attr("stroke", "black")
                 .attr("fill", "white")
-                .attr("width", tooltipConfig.width + 40)
+                .attr("width", tooltipConfig.width + 60)
                 .attr("height", tooltipConfig.height)
                 .attr("x", tooltipConfig.x)
                 .attr("y", tooltipConfig.y)
@@ -216,10 +218,12 @@ function d1(){
                 .attr("ry", 4);
             focus2.append("text")
                 .attr("class", "tooltip-x")
+                .attr("font-size", "20px")
                 .attr("x", tooltipConfig.x + tooltipLabelConfig.x)
                 .attr("y", tooltipConfig.y + tooltipLabelConfig.y1);
             focus2.append("text")
                 .attr("class", "tooltip-y")
+                .attr("font-size", "20px")
                 .attr("x", tooltipConfig.x + tooltipLabelConfig.x)
                 .attr("y", tooltipConfig.y + tooltipLabelConfig.y2);
 

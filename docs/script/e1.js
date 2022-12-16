@@ -194,18 +194,22 @@ function e1(){
                 .attr("class", "tooltip-1")
                 .attr('font-weight', 600)
                 .attr("dy", "0em")
+                .attr("font-size", "20px")
                 .text("");
             textArea.append("text")
                 .attr("class", "tooltip-2")
                 .attr("dy", "1.5em")
+                .attr("font-size", "20px")
                 .text("");
             textArea.append("text")
                 .attr("class", "tooltip-3")
                 .attr("dy", "3em")
+                .attr("font-size", "20px")
                 .text("");
             textArea.append("text")
                 .attr("class", "tooltip-4")
                 .attr("dy", "4.5em")
+                .attr("font-size", "20px")
                 .text("");
 
 
