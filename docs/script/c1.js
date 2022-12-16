@@ -48,7 +48,7 @@ function c1(){
 
 
         //Config
-        const url = "labor.csv";
+        const url = "file/labor.csv";
         const numberFormat = ".4~s"
         const numberFormatFunc = d3.format(numberFormat)
         const legendLocation = [outerWidth - 150, 100];

@@ -43,7 +43,7 @@ function e1(){
 
         //Config
         //const margin = {l: 120, r:300, t:80, b:80}
-        const url = "company.csv"
+        const url = "file/company.csv"
         const timeFormat = d3.utcFormat("%Y/%m/%d")
         const bubbleMax = 40;
         const legendLoc = [width+60, 150];

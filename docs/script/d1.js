@@ -50,7 +50,7 @@ function d1(){
 
         //Config
         //const margin = {l: 120, r:160, t:150, b:80}
-        const url = "revenue.csv"
+        const url = "file/revenue.csv"
         const timeFormat = d3.utcFormat("%Y")
 
         //const country/region info

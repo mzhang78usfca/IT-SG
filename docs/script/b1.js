@@ -44,7 +44,7 @@ function b1(){
         const legend2Location = [width - 130, 220];
 
         //Config
-        const url = "covid2.csv"
+        const url = "file/covid2.csv"
         //const timeFormat = d3.utcFormat("%Y/%m/%d")
 
 
