@@ -1,28 +1,55 @@
-function d1() {
+function d1(){
+
     //Apply margin to svg
-//Studied from Bhumika Srinivas' Starbucks Website example.
-    const margin = {l: 120, r:160, t:150, b:80}
-    const overall_width = 600
-    const overall_height = 500
+    //Studied from Bhumika Srinivas' Starbucks Website example.
     const svg_name = "#d1"
-    let outerSvg = d3.select(svg_name)
+    const outerHeight = 700;
+    let svg = d3.select(svg_name)
         .append("svg")
-        .attr("width", overall_width + margin.l + margin.r)
-        .attr("height", overall_height + margin.t + margin.b);
-//Background
-    outerSvg.append("rect")
+        .attr("width", "100%")
+        .attr("height", outerHeight);
+    let outerWidth = parseInt(svg.style("width"), 10);
+    const margin = {l: 120, r:120, t:180, b:100}
+    const innerWidth = outerWidth - margin.l - margin.r;
+    const innerHeight = outerHeight - margin.t - margin.b;
+    //Background
+    svg.append("rect")
         .attr("width", "100%")
         .attr("height", "100%")
         .attr("fill", "#E6E6FA");
-    let svg = outerSvg.append("g")
-        .attr("transform", `translate(${margin.l}, ${margin.t})`);
+    //title
+    svg.append("text")
+        .attr("x", outerWidth / 2)
+        .attr("y", 50)
+        .attr('text-anchor', 'middle')
+        .attr('font-size', "25px")
+        .attr('font-weight', 600)
+        .text("Singapore GDP and IT revenue changes");
+    svg.append("text")
+        .attr("x", outerWidth / 2)
+        .attr("y", 50)
+        .attr("dy", "1em")
+        .attr('text-anchor', 'middle')
+        .attr('font-size', "25px")
+        .attr('font-weight', 600)
+        .text("during COVID pandemic");
+
+
 
     function main(svg) {
 
-        let graph = svg.append("g").attr('class', 'graph');
+        let graph = svg.append("g")
+            .attr('class', 'graph')
+            .attr("transform", `translate(${margin.l}, ${margin.t})`);
+
+        //Variables, minus margin to prevent out of bound bars
+        //studied from: https://github.com/markumreed/data_science_for_everyone/blob/main/d3_project/bar_chart_csv/example.js
+        const width = innerWidth;
+        const height = innerHeight;
 
 
         //Config
+        //const margin = {l: 120, r:160, t:150, b:80}
         const url = "revenue.csv"
         const timeFormat = d3.utcFormat("%Y")
 
@@ -30,15 +57,13 @@ function d1() {
         const names = ["GDP", "Info Comm Industry Revenue"];
         const keys = ["gdp", "revenue"]
         const colors = [
-            "rgb(32,124,72)",
-            "rgb(30,142,168)",
+            "rgb(88,151,210)",
+            "rgb(210,183,52)"
         ];
 
         //Variables, minus margin to prevent out of bound bars
         //studied from: https://github.com/markumreed/data_science_for_everyone/blob/main/d3_project/bar_chart_csv/example.js
-        const width = overall_width;
-        const height = overall_height;
-        const legendLocation = [width/2-100, -80];
+        const legendLocation = [outerWidth/2 - 120, 100];
 
         //Scale building/mapping and axis drawing studied from: https://github.com/markumreed/data_science_for_everyone/blob/main/d3_project/bar_chart_csv/example.js
         let scaleX = d3.scaleTime().range([0, width]);
@@ -84,14 +109,7 @@ function d1() {
                 .scale(scaleColor)
 
 
-            //title
-            graph.append("text")
-                .attr("x", width / 2)
-                .attr("y", -110)
-                .attr('text-anchor', 'middle')
-                .attr('stroke', 'black')
-                .attr('font-weight', 600)
-                .text("Singapore GDP and IT revenue changes during COVID pandemic");
+
             graph.append("g")
                 .attr("transform", `translate(0,${height})`)
                 .attr('class', 'axis')
@@ -119,7 +137,7 @@ function d1() {
                 .text('Income / $ Billion');
 
             //legend
-            graph.append("g")
+            svg.append("g")
                 .attr("transform", `translate(${legendLocation[0]}, ${legendLocation[1]})`)
                 .call(legend);
 
@@ -140,8 +158,13 @@ function d1() {
             const tooltipConfig = {
                 width: 120,
                 height: 50,
+                x: -80,
+                y: -65
+            }
+            const tooltipLabelConfig = {
                 x: 10,
-                y: -22
+                y1: 20,
+                y2: 40
             }
             const formatX = d3.timeFormat("%Y")
             const formatY = d3.format("s")
@@ -151,17 +174,14 @@ function d1() {
             let focus = graph.append("g")
                 .attr("class", "focus")
                 .style("display", "none");
-
             focus.append("circle")
                 .attr("r", 5)
                 .attr("stroke", "black")
                 .attr("fill", scaleColor(names[0]));
-
             focus.append("rect")
                 .attr("class", "tooltip")
                 .attr("stroke", "black")
                 .attr("fill", "white")
-
                 .attr("width", tooltipConfig.width)
                 .attr("height", tooltipConfig.height)
                 .attr("x", tooltipConfig.x)
@@ -170,21 +190,16 @@ function d1() {
                 .attr("ry", 4);
             focus.append("text")
                 .attr("class", "tooltip-x")
-                .attr("x", 18)
-                .attr("y", -2);
-            focus.append("text")
-                .attr("x", 18)
-                .attr("y", 18)
-                .text(names[0]+":");
+                .attr("x", tooltipConfig.x + tooltipLabelConfig.x)
+                .attr("y", tooltipConfig.y + tooltipLabelConfig.y1);
             focus.append("text")
                 .attr("class", "tooltip-y")
-                .attr("x", 60)
-                .attr("y", 18)
+                .attr("x", tooltipConfig.x + tooltipLabelConfig.x)
+                .attr("y", tooltipConfig.y + tooltipLabelConfig.y2);
 
             let focus2 = graph.append("g")
                 .attr("class", "focus2")
                 .style("display", "none");
-
             focus2.append("circle")
                 .attr("r", 5)
                 .attr("stroke", "black")
@@ -193,7 +208,7 @@ function d1() {
                 .attr("class", "tooltip")
                 .attr("stroke", "black")
                 .attr("fill", "white")
-                .attr("width", tooltipConfig.width + 30)
+                .attr("width", tooltipConfig.width + 40)
                 .attr("height", tooltipConfig.height)
                 .attr("x", tooltipConfig.x)
                 .attr("y", tooltipConfig.y)
@@ -201,16 +216,12 @@ function d1() {
                 .attr("ry", 4);
             focus2.append("text")
                 .attr("class", "tooltip-x")
-                .attr("x", 18)
-                .attr("y", -2);
-            focus2.append("text")
-                .attr("x", 18)
-                .attr("y", 18)
-                .text("IT Revenue"+":");
+                .attr("x", tooltipConfig.x + tooltipLabelConfig.x)
+                .attr("y", tooltipConfig.y + tooltipLabelConfig.y1);
             focus2.append("text")
                 .attr("class", "tooltip-y")
-                .attr("x", 100)
-                .attr("y", 18)
+                .attr("x", tooltipConfig.x + tooltipLabelConfig.x)
+                .attr("y", tooltipConfig.y + tooltipLabelConfig.y2);
 
             graph.append("rect")
                 .attr("class", "overlay")
@@ -237,11 +248,11 @@ function d1() {
                     d = x0 - d0['date']> d1['date'] - x0 ? d1 : d0;
                 focus.attr("transform", "translate(" + scaleX(d['date']) + "," + scaleY(d[keys[0]]) + ")");
                 focus.select(".tooltip-x").text(formatX(d['date']));
-                focus.select(".tooltip-y").text(formatY(d[keys[0]]));
+                focus.select(".tooltip-y").text("GDP: " + formatY(d[keys[0]]));
 
                 focus2.attr("transform", "translate(" + scaleX(d['date']) + "," + scaleY(d[keys[1]]) + ")");
                 focus2.select(".tooltip-x").text(formatX(d['date']));
-                focus2.select(".tooltip-y").text(formatY(d[keys[1]]));
+                focus2.select(".tooltip-y").text("IT Revenue: " + formatY(d[keys[1]]));
             }
 
 
